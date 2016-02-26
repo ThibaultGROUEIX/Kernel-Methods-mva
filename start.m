@@ -8,6 +8,7 @@ n=length(Xtr);
 
 %show(Xtr(2,:))
 
+
 %compute f
 for num=1:10  %on regarde si l'image correspond au chiffre num-1
     
@@ -17,3 +18,8 @@ for num=1:10  %on regarde si l'image correspond au chiffre num-1
     gaussian_dist()
     end
 end
+
+%compute K
+K=zeros(length(Xtr));
+
+
