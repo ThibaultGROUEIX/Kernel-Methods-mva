@@ -1,4 +1,4 @@
-Xtr=load('Xtr.csv');
-Xte=load('Xte.csv');
-Ytr=load('Ytr.csv');
+Xtr=load('data/Xtr.csv');
+Xte=load('data/Xte.csv');
+Ytr=load('data/Ytr.csv');
 
