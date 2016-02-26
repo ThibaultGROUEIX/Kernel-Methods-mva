@@ -13,10 +13,10 @@ n=length(Xtr);
 for num=1:10  %on regarde si l'image correspond au chiffre num-1
     
     alpha=(K+lambda*n*eye(n))\Ytr(:,2);
-    function [res]=f(im)
+     [res]=f(im)
     res=zeros(10,1);
     gaussian_dist()
-    end
+    
 end
 
 %compute K
