@@ -6,20 +6,24 @@ Ytr=Ytr.Ytr;
 %problem constants
 n=length(Xtr);
 
+%problem parameters
 %show(Xtr(2,:))
 
-
-%compute f
-for num=1:10  %on regarde si l'image correspond au chiffre num-1
-    
-    alpha=(K+lambda*n*eye(n))\Ytr(:,2);
-     [res]=f(im)
-    res=zeros(10,1);
-    gaussian_dist()
-    
-end
 
 %compute K
 K=zeros(length(Xtr));
 
+
+%compute f
+for num=1:10  %on regarde si l'image correspond au chiffre num-1
+    alpha{num}=(K+lambda*n*eye(n))\Ytr(:,2);
+end
+
+%compute probability vector
+for i=1:n
+    x=Xte(i,:); %test image
+    output=0;
+    for j=1:n
+        output=output+
+end
 
