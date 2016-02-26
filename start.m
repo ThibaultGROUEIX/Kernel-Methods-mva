@@ -25,17 +25,16 @@ for num=1:10  %on regarde si l'image correspond au chiffre num-1
     alpha{num}=(K+lambda*n*eye(n))\Ytr(:,2);
 end
 
-score=zeros(length(Xte),10);  %proba que le ie testé est le chifre j
+score=zeros(length(Xte),10);  %proba que le ie testï¿½ est le chifre j
 for digit=1:10 %for each digit 'digit-1'
     %compute probability vector
     for i=1:n
-        a=alpha{digit}; %vector alpha
-        x=Xte(i,:); %test image
-        output=0;
-        for j=1:n
-            output=output+a(j)*gaussian_dist(x,Xtr(j,:), sigma);
+        a = alpha{digit}; %vector alpha
+        x = Xte(i,:); %test image
+        output = 0;
+        for j = 1:n
+            output = output + a(j) * gaussian_dist(x,Xtr(j,:), sigma);
         end
-        a
     end
     score(i,digit)=output;
 end
