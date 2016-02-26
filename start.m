@@ -14,14 +14,7 @@ n=length(Xtr);
 
 tic
 sigma = 1;
-K = zeros(length(Xtr), length(Xtr));
-for i = 1:length(Xtr)
-    i
-    for j= 1:i
-        K(i,j) =  gaussian_dist(Xtr(i,:), Xtr(j,:), sigma);
-        K(j,i) = K(i,j);
-    end
-end
+K = compute_k(Xtr, sigma);
 toc
 
 
