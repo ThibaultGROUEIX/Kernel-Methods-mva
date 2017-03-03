@@ -3,46 +3,61 @@ Xte=load('data/Xte.csv');
 Ytr=load('data/Ytr.mat');
 Ytr=Ytr.Ytr;
 
-%problem constants
-n=length(Xtr);
+%normalize
+%Xtr=normr(Xtr);
 
 %problem parameters
-lambda= 1;
-sigma = 1;
 
-%show(Xtr(2,:))
+validation=0;
+rotate=false;
+nrotate=0;
 
+%validation set23
 
-%compute K
+if (validation>0)
+            Xval=Xtr(4001:5000,:);
+            Xtr=Xtr(1:1000,:);
+            Yval = Ytr(4001:5000,:);
+            Ytr = Ytr(1:1000,:);
+            if (~rotate)
+               Xval = preprocess_training_set(Xval);
+            end
+end
+%Xtr=augment(Xtr,7.47);  %data augmentation, rotation training set
+%Ytr=[Ytr;Ytr;Ytr];
 
-tic
+n=length(Xtr);
+Xtr = preprocess_training_set(Xtr);
+if (~rotate)
+    Xte = preprocess_training_set(Xte);
+end
+lambda= 0.00004;
+sigma = 50;
+
+   
+%problem parameters
 K = compute_k(Xtr, sigma);
-save('K.mat','K');
-toc
-
-
 
 %compute alpha
 for num=1:10  %on regarde si l'image correspond au chiffre num-1
-    alpha{num}=(K+lambda*n*eye(n))\Ytr(:,2);
+    label=single(Ytr(:,2) == num-1)-single(Ytr(:,2)~=num-1);
+    alpha{num}=(K+lambda*n*eye(n))\label;
 end
 
-score=zeros(length(Xte),10);  %proba que le ie test� est le chifre j
-for digit=1:10 %for each digit 'digit-1'
-    %compute probability vector
-    for i=1:n
-        a = alpha{digit}; %vector alpha
-        x = Xte(i,:); %test image
-        output = 0;
-        for j = 1:n
-            output = output + a(j) * gaussian_dist(x,Xtr(j,:), sigma);
-        end
-    end
-    score(i,digit)=output;
-end
-
-%compute scores
+disp('compute scores for the validation set')
+score=compute_score(n,alpha,Xval,Xtr,sigma,1); %set last parameter to 1 to track progress
+[~,attrib] = max(score, [], 2);
+attrib = (attrib-1);
+diff=(attrib-Yval(:,2)) == 0;
+error =100 - 100* norm(single(diff),1)/1000
+%        csvwrite('Yte',attrib);
+% 
+% 
+disp('compute scores for the test set')
 score=compute_score(n,alpha,Xte,Xtr,sigma,1); %set last parameter to 1 to track progress
-attrib=max(score);
-
-
+[~,attrib]=max(score,[],2);
+attrib = (attrib-1);
+save('score_benchmark.mat','score');
+csvwrite('Yte',attrib);
+% 
+% 
