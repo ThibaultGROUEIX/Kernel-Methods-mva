@@ -17,4 +17,19 @@ The data is provided with the repo.
 ### Run the kernel ridge regression
 Just run start.m and you're set !
 
+
+
+### Results
+
+| Validation set | Test set      |
+| -------------- | ------------- |
+| 1000 images    | 10 000 images |
+| 100%           | 97.78%        |
+
+### Tricks
+
+* HoGs feature vector concatenating cell blocks of 4x4, 7x7 and 14x14. Gradients are put in 12 bins each time.
+* Jittering
+* Gaussian kernel (the best among the various kernel we tested)
+
 [![Analytics](https://ga-beacon.appspot.com/UA-91308638-2/github.com/ThibaultGROUEIX/Kernel-Methods-mva/README?pixel)](https://github.com/ThibaultGROUEIX/Kernel-Methods-mva/)
